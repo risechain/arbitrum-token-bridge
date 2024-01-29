@@ -93,7 +93,7 @@ export function getBridgeUiConfigForChain(
         ...arbitrumBaseConfig,
         network: {
           ...arbitrumBaseConfig.network,
-          name: 'Arbitrum Local'
+          name: 'Rise Devnet'
         }
       }
     case ChainId.ArbitrumNova:

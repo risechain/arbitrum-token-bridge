@@ -44,7 +44,7 @@ describe('Deposit ETH', () => {
           .should('be.visible')
       })
     cy.findByRole('button', {
-      name: 'Move funds to Arbitrum Local'
+      name: 'Move funds to Rise Devnet'
     }).click()
     cy.confirmMetamaskTransaction().then(() => {
       cy.findByText('~10 mins remaining').should('be.visible')

@@ -12,13 +12,33 @@ import { loadEnvironmentVariableWithFallback } from './index'
 import { getBridgeUiConfigForChain } from './bridgeUiConfig'
 import { orbitMainnets, orbitTestnets } from './orbitChainsList'
 
+export enum ChainId {
+  // L1
+  Ethereum = 1,
+  // L1 Testnets
+  Goerli = 5,
+  Local = 1337,
+  Sepolia = 11155111,
+  // L2
+  ArbitrumOne = 42161,
+  ArbitrumNova = 42170,
+  // L2 Testnets
+  ArbitrumGoerli = 421613,
+  ArbitrumSepolia = 421614,
+  ArbitrumLocal = 412346,
+  // Orbit
+  StylusTestnet = 23011913
+}
+
+const WhitelistChains = [ChainId.ArbitrumLocal, ChainId.Sepolia]
+
 // TODO: when the main branch of SDK supports Orbit chains, we should be able to fetch it from a single object instead
 export const getChains = () => {
   const chains = Object.values({
     ...arbitrumSdkChains,
     ...arbitrumSdkParentChains
   })
-  return chains.filter(chain => chain.chainID !== 1338)
+  return chains.filter(chain => WhitelistChains.includes(chain.chainID))
 }
 
 export const customChainLocalStorageKey = 'arbitrum:custom:chains'
@@ -125,24 +145,6 @@ export function removeCustomChainFromLocalStorage(chainId: number) {
   )
 }
 
-export enum ChainId {
-  // L1
-  Ethereum = 1,
-  // L1 Testnets
-  Goerli = 5,
-  Local = 1337,
-  Sepolia = 11155111,
-  // L2
-  ArbitrumOne = 42161,
-  ArbitrumNova = 42170,
-  // L2 Testnets
-  ArbitrumGoerli = 421613,
-  ArbitrumSepolia = 421614,
-  ArbitrumLocal = 412346,
-  // Orbit
-  StylusTestnet = 23011913
-}
-
 export const supportedCustomOrbitParentChains = [
   ChainId.ArbitrumGoerli,
   ChainId.ArbitrumSepolia
@@ -186,7 +188,9 @@ export const explorerUrls: { [chainId: number]: string } = {
   [ChainId.ArbitrumGoerli]: 'https://goerli.arbiscan.io',
   [ChainId.ArbitrumSepolia]: 'https://sepolia.arbiscan.io',
   // Orbit Testnets
-  [ChainId.StylusTestnet]: 'https://stylus-testnet-explorer.arbitrum.io'
+  [ChainId.StylusTestnet]: 'https://stylus-testnet-explorer.arbitrum.io',
+  // Devnet
+  [ChainId.ArbitrumLocal]: 'http://52.76.240.92:4000'
 }
 
 export const getExplorerUrl = (chainId: ChainId) => {
@@ -243,41 +247,39 @@ const defaultL1Network: L1Network = {
 
 const defaultL2Network: ParentChain = {
   chainID: 412346,
-  partnerChainIDs: [
-    // Orbit chains will go here
-  ],
   confirmPeriodBlocks: 20,
   ethBridge: {
-    bridge: '0x2b360a9881f21c3d7aa0ea6ca0de2a3341d4ef3c',
-    inbox: '0xff4a24b22f94979e9ba5f3eb35838aa814bad6f1',
-    outbox: '0x49940929c7cA9b50Ff57a01d3a92817A414E6B9B',
-    rollup: '0x65a59d67da8e710ef9a01eca37f83f84aedec416',
-    sequencerInbox: '0xe7362d0787b51d8c72d504803e5b1d6dcda89540'
+    bridge: '0xa9d25696a72830c663513f4744b066694fbc03bc',
+    inbox: '0xd3af3d17309f499d0c0f7557b194fdb34bbf9acb',
+    outbox: '0xb263cD05A1989751Dd2886668C3624AA09c154dd',
+    rollup: '0x334404cc7a4984980bbfb24f6881acd71218829a',
+    sequencerInbox: '0x9a112fc2529b435c11c3961299554d5ce161c993'
   },
   explorerUrl: '',
   isArbitrum: true,
   isCustom: true,
   name: 'ArbLocal',
-  partnerChainID: 1337,
+  partnerChainID: 11155111,
+  partnerChainIDs: [],
   retryableLifetimeSeconds: 604800,
   nitroGenesisBlock: 0,
   nitroGenesisL1Block: 0,
   depositTimeout: 900000,
   tokenBridge: {
-    l1CustomGateway: '0x75E0E92A79880Bd81A69F72983D03c75e2B33dC8',
-    l1ERC20Gateway: '0x4Af567288e68caD4aA93A272fe6139Ca53859C70',
-    l1GatewayRouter: '0x85D9a8a4bd77b9b5559c1B7FCb8eC9635922Ed49',
-    l1MultiCall: '0xA39FFA43ebA037D67a0f4fe91956038ABA0CA386',
-    l1ProxyAdmin: '0x7E32b54800705876d3b5cFbc7d9c226a211F7C1a',
-    l1Weth: '0xDB2D15a3EB70C347E0D2C2c7861cAFb946baAb48',
-    l1WethGateway: '0x408Da76E87511429485C32E4Ad647DD14823Fdc4',
-    l2CustomGateway: '0x525c2aBA45F66987217323E8a05EA400C65D06DC',
-    l2ERC20Gateway: '0xe1080224B632A93951A7CFA33EeEa9Fd81558b5e',
-    l2GatewayRouter: '0x1294b86822ff4976BfE136cB06CF43eC7FCF2574',
-    l2Multicall: '0xDB2D15a3EB70C347E0D2C2c7861cAFb946baAb48',
-    l2ProxyAdmin: '0xda52b25ddB0e3B9CC393b0690Ac62245Ac772527',
-    l2Weth: '0x408Da76E87511429485C32E4Ad647DD14823Fdc4',
-    l2WethGateway: '0x4A2bA922052bA54e29c5417bC979Daaf7D5Fe4f4'
+    l1CustomGateway: '0x465E43E84bC99b2ef91376AcEC09aF41aAC5663a',
+    l1ERC20Gateway: '0x653fEC03522B60DE7f8B0A3ff5b414a917Da0FC8',
+    l1GatewayRouter: '0xf20c1f9f777393Fc5fAb6829fC1965D1B29E7963',
+    l1MultiCall: '0x64D758eb28CFB17553A8C33D86A0F9420F042A91',
+    l1ProxyAdmin: '0xfC4f2a0e92fD2f9D281045fA00f8D2c023066d24',
+    l1Weth: '0x5B0D27Fcc5309665c09BA7cDAa28c4A95b633E82',
+    l1WethGateway: '0x3032aAd3b1690D3E19608c7952Cf9A96f6Ee9168',
+    l2CustomGateway: '0x4b6e58b2930b2e1768580b6C7B4f416d5D615C8E',
+    l2ERC20Gateway: '0xE4AadD073390Ce0098Ce4567eDd57e3AE85efA8F',
+    l2GatewayRouter: '0xad995045944da625dAd9115d1755e604F1eDCb1c',
+    l2Multicall: '0xcb753e31e15AFa714771b0f37d1E79E43A91B8E3',
+    l2ProxyAdmin: '0xc555D5c6CF07F0D1e8b314a427274cb089007323',
+    l2Weth: '0xF8Ea9a6DEcEfC7336F40b94Ac120feb54d78A823',
+    l2WethGateway: '0x7F12e986946016Af2fCDBf5B12a559812556656E'
   }
 }
 
@@ -310,6 +312,7 @@ export function registerLocalNetwork(
     rpcURLs[l2Network.chainID] = localL2NetworkRpcUrl
 
     addCustomNetwork({ customL1Network: l1Network, customL2Network: l2Network })
+    console.log(l2Networks)
   } catch (error: any) {
     console.error(`Failed to register local network: ${error.message}`)
   }

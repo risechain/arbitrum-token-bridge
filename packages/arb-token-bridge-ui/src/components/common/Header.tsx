@@ -47,6 +47,10 @@ const learnMenuProps = toHeaderMenuProps([
 
 const explorersMenuProps = toHeaderMenuProps([
   {
+    title: 'Rise Devnet',
+    link: getExplorerUrl(ChainId.ArbitrumLocal)
+  },
+  {
     title: 'Arbitrum One',
     link: getExplorerUrl(ChainId.ArbitrumOne)
   },

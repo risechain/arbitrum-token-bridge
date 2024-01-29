@@ -37,7 +37,7 @@ export function Layout(props: LayoutProps) {
       style={{ backgroundImage: 'url(/images/space.webp)' }}
       className="background-image relative flex min-h-screen flex-col overflow-hidden bg-repeat"
     >
-      <SiteBanner>
+      {/* <SiteBanner>
         Arbitrum Orbit is mainnet-ready! Learn more about launching a customized
         chain{' '}
         <ExternalLink
@@ -47,7 +47,7 @@ export function Layout(props: LayoutProps) {
           here
         </ExternalLink>
         .
-      </SiteBanner>
+      </SiteBanner> */}
       <Header />
 
       <div className="bg-gradient-overlay flex min-h-[calc(100vh-80px)] flex-col">
@@ -56,7 +56,7 @@ export function Layout(props: LayoutProps) {
 
       <Toast />
 
-      <Footer />
+      {/* <Footer /> */}
 
       <Moon />
     </div>

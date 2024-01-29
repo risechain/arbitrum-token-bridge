@@ -1,0 +1,10 @@
+# syntax=docker/dockerfile:1
+FROM node:18.19.0-alpine3.19 as base
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY . .
+RUN yarn && yarn build
+
+ENTRYPOINT ["yarn", "workspace", "arb-token-bridge-ui", "start", "-H", "0.0.0.0"]

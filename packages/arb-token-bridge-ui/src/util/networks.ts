@@ -39,6 +39,7 @@ export const getChains = () => {
     ...arbitrumSdkParentChains
   })
   return chains.filter(chain => WhitelistChains.includes(chain.chainID))
+  // return chains.filter(chain => chain.chainID != 1338)
 }
 
 export const customChainLocalStorageKey = 'arbitrum:custom:chains'

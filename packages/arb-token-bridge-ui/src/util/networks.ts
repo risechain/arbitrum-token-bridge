@@ -148,7 +148,8 @@ export function removeCustomChainFromLocalStorage(chainId: number) {
 
 export const supportedCustomOrbitParentChains = [
   ChainId.ArbitrumGoerli,
-  ChainId.ArbitrumSepolia
+  ChainId.ArbitrumSepolia,
+  ChainId.ArbitrumLocal
 ]
 
 export const rpcURLs: { [chainId: number]: string } = {
@@ -259,7 +260,7 @@ const defaultL2Network: ParentChain = {
   explorerUrl: '',
   isArbitrum: true,
   isCustom: true,
-  name: 'ArbLocal',
+  name: 'Rise DevNet',
   partnerChainID: 11155111,
   partnerChainIDs: [],
   retryableLifetimeSeconds: 604800,
@@ -311,9 +312,10 @@ export function registerLocalNetwork(
   try {
     rpcURLs[l1Network.chainID] = localL1NetworkRpcUrl
     rpcURLs[l2Network.chainID] = localL2NetworkRpcUrl
+    console.log(rpcURLs)
 
     addCustomNetwork({ customL1Network: l1Network, customL2Network: l2Network })
-    console.log(l2Networks)
+    // console.log(l2Networks)
   } catch (error: any) {
     console.error(`Failed to register local network: ${error.message}`)
   }

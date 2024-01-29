@@ -123,7 +123,7 @@ export const localL1Network: Chain = {
  */
 export const localL2Network: Chain = {
   id: ChainId.ArbitrumLocal,
-  name: 'ArbLocal',
+  name: 'Rise Devnet',
   network: 'arbitrum-localhost',
   nativeCurrency: ether,
   rpcUrls: {

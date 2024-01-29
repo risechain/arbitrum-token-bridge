@@ -57,6 +57,7 @@ const chainList = isTestingEnvironment
       arbitrumSepolia,
       stylusTestnet,
       ...wagmiOrbitChains,
+      arbitrumLocal,
       ...customChains
     ]
 

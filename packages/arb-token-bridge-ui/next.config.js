@@ -5,7 +5,8 @@
  **/
 
 module.exports = {
-  distDir: 'build',
+  // distDir: 'build',
+  output: 'standalone',
   productionBrowserSourceMaps: true,
   reactStrictMode: true
 }
